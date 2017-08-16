@@ -7,7 +7,7 @@
       light
       enable-resize-watcher
       >
-        <request-manager></request-manager>
+      <request-manager></request-manager>
     </v-navigation-drawer>
     <main fluid style="height: 100vh">
       <v-layout column style="height: 100%">
@@ -17,16 +17,7 @@
           </v-layout>
         </v-toolbar>
         <v-container fluid class="pa-1" style="display: flex;">
-
-            <v-layout row style="flex-grow: 1" class="ma-0">
-              <v-flex xs6 class="pa-0">
-                <graphql-editor></graphql-editor>
-              </v-flex>
-              <v-flex xs6>
-              <graphql-response-viewer></graphql-response-viewer>
-              </v-flex>
-            </v-layout>
-
+          <main-view></main-view>
         </v-container>
       </v-layout>
     </main>
@@ -34,8 +25,9 @@
 </template>
 
 <script>
-  import GraphqlEditor from './components/GraphqlEditor'
-  import GraphqlResponseViewer from './components/GraphqlResponseViewer'
+  // import GraphqlEditor from './components/GraphqlEditor'
+  // import GraphqlResponseViewer from './components/GraphqlResponseViewer'
+  import MainView from './components/MainView'
   import RequestManager from './components/RequestManager'
   export default {
     name: 'graft',
@@ -45,9 +37,8 @@
       }
     },
     components: {
-      RequestManager,
-      GraphqlEditor,
-      GraphqlResponseViewer
+      MainView,
+      RequestManager
     }
   }
 </script>

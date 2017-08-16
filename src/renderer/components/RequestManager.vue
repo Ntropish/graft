@@ -5,8 +5,11 @@
     </v-toolbar>
     <v-flex style="height: 100%; overflow-y: auto">
     <v-list>
-      <v-list-tile v-for="(request, index) in requests" :key="index">
-        {{request}}
+      <v-list-tile 
+        v-for="(request, index) in requests" :key="index"
+        @click="selectRequest(index)"
+        :class="{'grey lighten-2': index === selectedRequest}">
+        {{request.name}}
       </v-list-tile>
     </v-list>
     </v-flex>
@@ -18,14 +21,18 @@
     name: 'request-manager',
     methods: {
       newRequest () {
-        this.$store.commit('ADD_REQUEST', {
-          query: 'no query'
-        })
+        this.$store.commit('ADD_REQUEST')
+      },
+      selectRequest (index) {
+        this.$store.commit('SELECT_REQUEST', index)
       }
     },
     computed: {
       requests () {
         return this.$store.state.Request.requests
+      },
+      selectedRequest () {
+        return this.$store.state.Request.selected
       }
     }
   }

@@ -1,0 +1,182 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: GraphQL
+scopeName: source.graphql
+fileTypes: [graphql, GraphQL, gql]
+uuid: 101a0bec-a04e-4f6b-8e55-9b8bdffa3cf8
+
+patterns:
+- include: '#comment'
+- include: '#enumSelections'
+- include: '#definitions'
+
+- comment: a schema definintion
+  name: meta.definition.schema
+  match: \b(schema)\b
+  captures:
+    '1': { name: storage.type }
+
+- comment: a fragment definintion
+  name: meta.fragment
+  match: (fragment)\s*([_A-Za-z][_0-9A-Za-z]*)\s*(on)\s*([_A-Za-z][_0-9A-Za-z]*)
+  captures:
+    '1': { name: storage.type }
+    '2': { name: variable.other }
+    '3': { name: keyword.operator }
+    '4': { name: support.constant }
+
+- comment: an operation definition
+  name: meta.operation
+  match: (query|mutation)\s*([_A-Za-z][_0-9A-Za-z]*)
+  captures:
+    '1': { name: storage.type }
+    '2': { name: variable.other }
+
+- include: '#arguments'
+- include: '#enumSelections'
+- include: '#selections'
+- include: '#nonNull'
+- include: '#operator'
+
+repository:
+  comment:
+    name: comment.line.number-sign.query
+    match: '#.*$'
+
+  argument:
+    name: variable.parameter
+    match: '[_A-Za-z][_0-9A-Za-z]*(?=\:)'
+
+  arguments:
+    name: meta.arguments
+    begin: \(
+    beginCaptures:
+      '0': { name: meta.brace.round.query }
+    end: \)
+    endCaptures:
+      '0': { name: meta.brace.round.query }
+    patterns:
+    - include: '#argument'
+    - include: '#string'
+    - include: '#boolean'
+    - include: '#variable'
+    - include: '#number'
+    - include: '#comment'
+    - include: '#nonNull'
+    - include: '#operator'
+    - include: '#constants'
+
+  boolean:
+    name: constant.language.boolean
+    match: true|false
+
+  builtInField:
+    name: keyword.other.query
+    match: __schema|__typename|__type
+
+  constants:
+    name: constant.language
+    match: \b(ID|Int|String|Float|Boolean)\b
+
+  definitions:
+    name: meta.definintion.type
+    match: \b(type|interface|input|scalar|union|enum)\s*([_A-Za-z][_0-9A-Za-z]*)(\s*(implements)\s*([_A-Za-z][_0-9A-Za-z]*)(\s*,\s*([_A-Za-z][_0-9A-Za-z]*))?)?
+    captures:
+      '1': { name: storage.type }
+      '2': { name: meta.type }
+      '4': { name: keyword.operator }
+      '5': { name: meta.type }
+      '7': { name: meta.type }
+
+  directive:
+    name: storage.modifier
+    match: '@[a-z]+'
+
+  enum:
+    name: variable.parameter.enum
+    match: '[_A-Za-z][_0-9A-Za-z]*'
+
+  enumSelections:
+    name: meta.selections.enum
+    begin: \b(enum)\s*[_A-Za-z][_0-9A-Za-z]*\s*\{
+    beginCaptures:
+      '1': { name: storage.type }
+    end: \}
+    patterns:
+    - include: '#definitions'
+    - include: '#comment'
+    - include: '#enum'
+
+  escapedChar:
+    name: constant.character.escape.query
+    match: \\(?:u[\da-fA-f]{4}|.)
+
+  fieldAlias:
+    name: string.property.argument
+    match: '[_A-Za-z][_0-9A-Za-z]*(?=\:)'
+
+  fieldWithArgs:
+    name: string.property
+    match: '[_A-Za-z][_0-9A-Za-z]*(?=\()'
+
+  fragmentSpread:
+    match: (\.\.\.)\s*([_A-Za-z][_0-9A-Za-z]*)\s*(on)?
+    captures:
+      '1': { name: keyword.operator }
+      '2': { name: variable.other }
+
+  inlineFragment:
+    match: (\.\.\.)\s*(on)\s*([_A-Za-z][_0-9A-Za-z]*)
+    captures:
+      '1': { name: keyword.operator }
+      '2': { name: keyword.operator }
+      '3': { name: support.constant }
+
+  number:
+    name: constant.numeric
+    match: \d+\.?\d*[eE]?[\+\-]?\d*
+
+  operator:
+    name: keyword.operator
+    match: \=|\|
+
+  selections:
+    name: meta.selections
+    begin: \{
+    beginCaptures:
+      '0': { name: meta.brace.curly.query }
+    end: \}
+    endCaptures:
+      '0': { name: meta.brace.curly.query }
+    patterns:
+    - include: '#fieldAlias'
+    - include: '#fieldWithArgs'
+    - include: '#inlineFragment'
+    - include: '#fragmentSpread'
+    - include: '#directive'
+    - include: '#arguments'
+    - include: '#comment'
+    - include: '#selections'
+    - include: '#builtInField'
+    - include: '#constants'
+    - include: '#nonNull'
+
+  string:
+    name: string.quoted.double
+    begin: '"'
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin }
+    end: '"'
+    endCaptures:
+      '0': { name: punctuation.definition.string.end }
+    patterns:
+    - include: '#escapedChar'
+
+  nonNull:
+    name: keyword.control.non-null
+    match: \!
+
+  variable:
+    name: constant.other.symbol
+    match: \$[_A-Za-z][_0-9A-Za-z]*
+foldingStartMarker: '{(['
+foldingStopMarker: '})]'
