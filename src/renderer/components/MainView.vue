@@ -24,12 +24,11 @@
     },
     methods: {
       updateQuery (a) {
-        console.log('update:', a)
         this.$store.commit(
-          'CHANGE_QUERY',
+          'CHANGE_REQUEST',
           {
-            index: this.$store.state.Request.selected,
-            query: a
+            property: 'query',
+            value: a
           })
       }
     },

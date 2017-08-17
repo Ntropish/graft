@@ -13,7 +13,9 @@
       <v-layout column style="height: 100%">
         <v-toolbar>
           <v-layout>
-            TOOLS
+            <v-btn outline fab small class="teal--text">
+              <v-icon>play_arrow</v-icon>
+            </v-btn>
           </v-layout>
         </v-toolbar>
         <v-container fluid class="pa-1" style="display: flex;">

@@ -20,15 +20,17 @@ const mutations = {
   SELECT_REQUEST (state, index) {
     state.selected = index
   },
-  CHANGE_QUERY (state, {index, query}) {
-    state.requests[index].query = query
-  }
+  CHANGE_REQUEST (state, {property, index, value}) {
+    index = index || state.selected
+    state.requests[index][property] = value
+  },
+
 }
 
 const actions = {
-  someAsyncTask ({ commit }) {
+  submitRequest ({ commit }, {index}) {
     // do something async
-    commit('INCREMENT_MAIN_COUNTER')
+    commit('CHANGE_REQUEST')
   }
 }
 

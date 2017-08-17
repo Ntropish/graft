@@ -24,8 +24,15 @@
         styleActiveLine: true,
         mode: 'graphql'
       })
+      this.editor.on('change', (val) => {
+        this.$emit('change-content', this.editor.getValue())
+      })
     },
     watch: {
+      query (value) {
+        if (value === this.editor.getValue()) return
+        this.editor.setValue(value)
+      }
     }
   }
 </script>
