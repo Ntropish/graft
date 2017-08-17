@@ -58,6 +58,8 @@
   "dependencies": {
     "ace-builds": "^1.2.8",
     "axios": "^0.16.1",
+    "codemirror": "^5.28.0",
+    "codemirror-graphql": "^0.6.11",
     "monaco-editor": "^0.9.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",

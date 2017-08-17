@@ -1,11 +1,11 @@
 <template>
-  <div ref="editor" class="">
-    
-  </div>
+  <textarea ref="editor" class="editor">
+  </textarea>
 </template>
 
 <script>
-  import 'ace-builds/src-min-noconflict/ace.js'
+  import CodeMirror from 'codemirror'
+  import 'codemirror-graphql/mode'
   export default {
     name: 'graphql-editor',
     props: ['query'],
@@ -19,26 +19,19 @@
       }
     },
     mounted () {
-      this.editor = window.ace.edit(this.$refs.editor)
-      this.editor.setValue('test', 1)
-      this.editor.getSession().setMode(`static/gql`)
-      // this.editor.setBehavioursEnabled(true)
-      this.editor.on('change', () => {
-        this.beforeContent = this.editor.getValue()
-        this.$emit('change-content', this.editor.getValue())
+      this.editor = CodeMirror.fromTextArea(this.$refs.editor, {
+        lineNumbers: true,
+        styleActiveLine: true,
+        mode: 'graphql'
       })
     },
     watch: {
-      query () {
-        console.log('got new query:', this.query)
-        this.editor.setValue(this.query || '', 1)
-      }
     }
   }
 </script>
 
-<style scoped>
-div {
+<style>
+.CodeMirror {
   width: 100%;
   height: 100%;
 }
