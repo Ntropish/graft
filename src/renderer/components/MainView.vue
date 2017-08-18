@@ -23,12 +23,12 @@
       GraphqlResponseViewer
     },
     methods: {
-      updateQuery (a) {
+      updateQuery (value) {
         this.$store.commit(
           'CHANGE_REQUEST',
           {
-            property: 'query',
-            value: a
+            value,
+            property: 'query'
           })
       }
     },

@@ -13,7 +13,7 @@
       <v-layout column style="height: 100%">
         <v-toolbar>
           <v-layout>
-            <v-btn outline fab small class="teal--text">
+            <v-btn outline fab small class="teal--text" @click="play">
               <v-icon>play_arrow</v-icon>
             </v-btn>
           </v-layout>
@@ -36,6 +36,11 @@
     data () {
       return {
         drawer: true
+      }
+    },
+    methods: {
+      play () {
+        this.$store.dispatch('submitRequest')
       }
     },
     components: {

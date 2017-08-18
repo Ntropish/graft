@@ -19,6 +19,10 @@
 <script>
   export default {
     name: 'request-manager',
+    mounted () {
+      this.newRequest()
+      this.$store.commit('SELECT_REQUEST', 0)
+    },
     methods: {
       newRequest () {
         this.$store.commit('ADD_REQUEST')

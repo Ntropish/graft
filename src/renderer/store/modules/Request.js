@@ -28,9 +28,9 @@ const mutations = {
 }
 
 const actions = {
-  submitRequest ({ commit }, {index}) {
+  submitRequest ({ commit, state }, {index} = {}) {
     // do something async
-    commit('CHANGE_REQUEST')
+    commit('CHANGE_REQUEST', {property: 'result', value: 'new result'})
   }
 }
 
